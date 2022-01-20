@@ -1,12 +1,36 @@
-import { GlobalStyle } from "./assets/styles/global";
+import { useState } from 'react'
+import Modal from 'react-modal'
 import { Dasboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 
+import { GlobalStyle } from "./assets/styles/global";
+
+Modal.setAppElement('#root');
+
 export function App() {
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+
+  function handleOpenNewTransactionModal() {
+    setIsNewTransactionModalOpen(true);
+  }
+
+  function handleCloseNewTransactionModal() {
+    setIsNewTransactionModalOpen(false);
+  }
+
   return (
     <>
-      <Header/>
+      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
+
       <Dasboard />
+
+      <Modal 
+          isOpen={isNewTransactionModalOpen}
+          onRequestClose={handleCloseNewTransactionModal}
+        >
+          <h2>Cadastrar transação</h2>
+      </Modal>
+
       <GlobalStyle />
     </>
   );
